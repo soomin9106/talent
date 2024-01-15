@@ -18,7 +18,10 @@ const config: Config = {
       lightGray: "#B2B2B2",
       white: "#FFFFFF",
       black: "#333",
-      brown: "#AF8762"
+      brown: "#AF8762",
+      naturalGray: "#6F767E",
+      green: "#88F256",
+      yellow: "#F9F017"
     }
   },
   plugins: [],

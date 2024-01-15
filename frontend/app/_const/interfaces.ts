@@ -10,3 +10,22 @@ export interface Cell {
     name: string
     id: number
 }
+
+// Cellinfo - 각 셀 정보 관련
+export interface CellInfoProps {
+    activeCellId: number | null
+}
+
+export interface StudentInfoProps {
+    name: string;
+    grade: number;
+    zone: string;
+    talent: number;
+}
+
+export interface CellInfo {
+    id: number;
+    name: string;
+    member_count: number;
+    student_info: StudentInfoProps[];
+}

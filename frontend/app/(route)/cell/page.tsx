@@ -1,7 +1,16 @@
 "use client"
+import CellInfo from "@/app/_components/CellInfo";
 import Navbar from "@/app/_components/Navbar"
-import { useClient } from 'react-interactions';
 import { useState } from "react";
+import styled from "styled-components";
+
+const NavDiv = styled.div`
+  width: 100%;
+`;
+
+const ContentDiv = styled.div`
+  width: 90%;
+`;
 
 const Cell = () => {
     const [activeCellId, setActiveCellId] = useState<number | null>(null)
@@ -34,9 +43,11 @@ const Cell = () => {
         }
     ]
     return (
-        <>
-            <Navbar activeCellId={activeCellId} setActiveCellId={setActiveCellId} cellList={cellList} />
-        </>
+        <div className="w-full flex">
+            <NavDiv>
+                <Navbar activeCellId={activeCellId} setActiveCellId={setActiveCellId} cellList={cellList} />
+            </NavDiv>
+        </div>
     )
 }
 

@@ -50,9 +50,11 @@ const CellDetail = () => {
                     {
                         isEditable ? (
                             <div className="flex flex-row w-full">
-                                <Input variant="static" value={cellName} placeholder="셀이름" crossOrigin={undefined} onChange={handleChange} containerProps={{
-                                    className: "text-[24px] text-black font-bold",
-                                }} />
+                                <div className="border-[1px] border-lightGray p-[8px] rounded-[8px]">
+                                    <Input variant="static" value={cellName} placeholder="셀이름" crossOrigin={undefined} onChange={handleChange} containerProps={{
+                                        className: "text-[24px] text-black font-bold",
+                                    }} />
+                                </div>
                                 <div className="ml-auto flex">
                                     <div onClick={handleCellNameSubmit}>
                                         <Check />

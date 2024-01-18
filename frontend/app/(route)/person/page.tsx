@@ -1,4 +1,5 @@
 'use client';
+import BackTopBar from "@/app/_components/BackTopBar";
 import { Input, Select, Option } from "@material-tailwind/react"
 import classNames from "classnames"
 import { useState } from "react"
@@ -79,6 +80,7 @@ const AddPerson = () => {
 
     return (
         <div className="bg-white flex flex-col space-y-[20px] w-full h-[100vh] p-[16px]">
+            <BackTopBar />
             <div>
                 <span className="font-medium text-[24px] text-black">인원 추가</span>
             </div>

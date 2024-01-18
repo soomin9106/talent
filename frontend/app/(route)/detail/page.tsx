@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Input } from "@material-tailwind/react";
 import Check from "../../../public/check.svg"
 import Cancle from "../../../public/cancle.svg"
+import BackTopBar from "@/app/_components/BackTopBar";
 
 const CellDetail = () => {
     const params = useSearchParams();
@@ -44,6 +45,7 @@ const CellDetail = () => {
 
     return (
         <div className="flex flex-col bg-white w-full h-[100vh] px-[16px] pt-[16px] space-y-[25px]">
+            <BackTopBar />
             <div className="flex flex-col space-y-[12px]">
                 <div onClick={() => {
                     changeToEditMode()

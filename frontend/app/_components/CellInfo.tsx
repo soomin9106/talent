@@ -17,16 +17,16 @@ const CellInfo = ({ activeCellId }: CellInfoProps) => {
         <div className="w-full flex flex-col space-y-[12px]">
             <div className="w-full bg-white flex shadow-sm px-[8px] py-[8px] rounded-[8px] space-x-[42px] items-center">
                 <div>
-                    <span className="text-black text-[16px] font-medium">이름</span>
+                    <span className="text-black text-[14px] font-medium">이름</span>
                 </div>
-                <div className="border rounded-[10px]">
-                    <span className="text-black text-[16px] font-medium">학년</span>
+                <div className="border rounded-[10px] p-[4px]">
+                    <span className="text-black text-[14px] font-medium">학년</span>
                 </div>
                 <div className="flex flex-col space-y-[4px]">
-                    <span className="text-black text-[16px] font-medium">zone</span>
+                    <span className="text-black text-[14px] font-medium">zone</span>
                 </div>
                 <div>
-                    <span className="text-black text-[16px] font-medium">달란트</span>
+                    <span className="text-black text-[14px] font-medium">달란트</span>
                 </div>
             </div>
             {

@@ -12,6 +12,8 @@ const AddCell = () => {
 
     const onClickCellAdd = () => {
         console.log('셀 추가 API call');
+        console.log(name);
+        
     }
     return (
         <div className="bg-white flex flex-col space-y-[20px] w-full h-[100vh] p-[16px]">
@@ -19,15 +21,19 @@ const AddCell = () => {
                 <span className="font-medium text-[24px] text-black">셀 추가하기</span>
             </div>
             <div className="flex flex-col space-y-[10px] w-full">
-                <div className="border-[1px] border-lightGray p-[10px] rounded-[8px] text-[16px] text-black font-medium">
+                <div className="p-[10px] rounded-[8px] text-[16px] text-black font-medium">
                     <Input
-                        placeholder="셀 이름을 입력하세요"
+                        placeholder="셀이름을 입력하세요"
+                        label="셀이름을 입력하세요"
                         crossOrigin={undefined}
                         value={name}
-                        onChange={handleChange}
-                        labelProps={{
-                            className: "border-[0px]",
+                        onChange={(e) => {
+                            handleChange(e)
                         }}
+                        labelProps={{
+                            className: "",
+                        }}
+                        className="peer w-full h-full bg-transparent text-blue-gray-700 font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
                     />
                 </div>
             </div>

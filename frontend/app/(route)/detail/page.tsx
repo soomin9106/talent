@@ -3,8 +3,8 @@
 import CellInfo from "@/app/_components/CellInfo";
 import { cellInfoMock } from "@/app/_const/mock";
 import classNames from "classnames";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { Input } from "@material-tailwind/react";
 import Check from "../../../public/check.svg"
 import Cancle from "../../../public/cancle.svg"
@@ -12,6 +12,7 @@ import Cancle from "../../../public/cancle.svg"
 const CellDetail = () => {
     const params = useSearchParams();
     const id = Number(params.get('id'))
+    const router = useRouter()
 
     //Filter from mock data - about specific cell
     const data = cellInfoMock.find((cell: CellInfo) => {
@@ -83,7 +84,7 @@ const CellDetail = () => {
             <div className="flex flex-row space-x-[4px] w-full">
                 <div
                     onClick={() => {
-                        console.log('셀 인원 추가');
+                        router.push('/person')
                     }}
                     className={classNames(
                         "cursor-pointer px-[28px] py-[12px] rounded-[8px] bg-brown mt-auto",
@@ -96,7 +97,7 @@ const CellDetail = () => {
                 </div>
                 <div
                     onClick={() => {
-                        console.log('셀 인원 추가');
+                        console.log('보고서 작성');
                     }}
                     className={classNames(
                         "cursor-pointer px-[28px] py-[12px] rounded-[8px] bg-brown mt-auto",

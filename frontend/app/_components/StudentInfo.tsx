@@ -1,8 +1,14 @@
+'use client';
 import classNames from "classnames"
 import { StudentInfoProps } from "../_const/interfaces"
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const StudentInfo = (props: StudentInfoProps) => {
-    const { name, grade, zone, talent } = props
+    const params = useSearchParams();
+    const router = useRouter()
+    const cellId = Number(params.get('id'))
+    const { id: studentId, name, grade, zone, talent } = props
     const zoneColor = zone === "Green" ? "bg-green" : zone === "Gray" ? "bg-lightGray" : zone === "New" ? "bg-yellow" : "bg-black"
     return (
         <div className="w-full bg-white flex shadow-sm px-[8px] py-[8px] rounded-[8px] space-x-[42px] items-center">
@@ -24,7 +30,7 @@ const StudentInfo = (props: StudentInfoProps) => {
             </div>
             <div
                 onClick={() => {
-                    console.log('수정하기');
+                    router.push(`/edit?studentId=${studentId}&cellId=${cellId}`)
                 }}
                 className={classNames(
                     "cursor-pointer p-[8px] rounded-[8px] bg-brown mt-auto",

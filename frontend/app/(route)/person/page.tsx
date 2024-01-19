@@ -1,5 +1,7 @@
 'use client';
 import BackTopBar from "@/app/_components/BackTopBar";
+import { gradeOptions, zoneOptions } from "@/app/_const/options";
+import { handleChange } from "@/app/_utils/functions";
 import { Input, Select, Option } from "@material-tailwind/react"
 import classNames from "classnames"
 import { useState } from "react"
@@ -10,73 +12,12 @@ const AddPerson = () => {
     const [zone, setZone] = useState("")
     const [talent, setTalent] = useState("")
 
-    const handleChange = (event: { target: { value: any; }; }, setValue: (arg0: any) => void) => {
-        setValue(event.target.value)
-    }
-
     const onClickPersonAdd = () => {
         console.log(name);
         console.log(grade);
         console.log(zone);
         console.log(talent);
     }
-
-    const gradeOptions = [
-        {
-            id: 1,
-            value: "1",
-            label: "1학년"
-        },
-        {
-            id: 2,
-            value: "2",
-            label: "2학년"
-        },
-
-        {
-            id: 3,
-            value: "3",
-            label: "3학년"
-        },
-
-        {
-            id: 4,
-            value: "4",
-            label: "4학년"
-        },
-
-        {
-            id: 5,
-            value: "5",
-            label: "5학년"
-        },
-
-        {
-            id: 6,
-            value: "6",
-            label: "6학년"
-        },
-
-    ]
-
-    const zoneOptions = [
-        {
-            value: "Green",
-            label: "Green"
-        },
-        {
-            value: "Gray",
-            label: "Gray"
-        },
-        {
-            value: "Black",
-            label: "Black"
-        },
-        {
-            value: "New",
-            label: "New"
-        },
-    ]
 
     return (
         <div className="bg-white flex flex-col space-y-[20px] w-full h-[100vh] p-[16px]">

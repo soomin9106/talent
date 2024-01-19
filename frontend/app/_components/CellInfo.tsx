@@ -35,7 +35,7 @@ const CellInfo = ({ activeCellId }: CellInfoProps) => {
                         {
                             data?.student_info?.map((student) => {
                                 return (
-                                    <StudentInfo key={student.name} name={student.name} grade={student.grade} zone={student.zone} talent={student.talent} />
+                                    <StudentInfo key={student.name} id={student.id} name={student.name} grade={student.grade} zone={student.zone} talent={student.talent} />
                                 )
                             })
                         }

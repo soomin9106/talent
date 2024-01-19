@@ -17,6 +17,7 @@ export interface CellInfoProps {
 }
 
 export interface StudentInfoProps {
+    id: number;
     name: string;
     grade: number;
     zone: string;

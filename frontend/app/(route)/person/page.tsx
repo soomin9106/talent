@@ -51,7 +51,7 @@ const AddPerson = () => {
                         {
                             gradeOptions.map((option) => {
                                 return (
-                                    <Option className="text-black" id={option.value} value={option.value}>{option.label}</Option>
+                                    <Option key={option.value} className="text-black" id={option.value} value={option.value}>{option.label}</Option>
                                 )
                             })
                         }
@@ -69,7 +69,7 @@ const AddPerson = () => {
                         {
                             zoneOptions.map((option) => {
                                 return (
-                                    <Option className="text-black" id={option.value} value={option.value}>{option.label}</Option>
+                                    <Option key={option.value} className="text-black" id={option.value} value={option.value}>{option.label}</Option>
                                 )
                             })
                         }

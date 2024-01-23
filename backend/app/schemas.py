@@ -12,6 +12,12 @@ class CellBase(BaseModel):
 class CellCreate(CellBase):
     pass
 
+class CellUpdate(CellBase):
+    id: int
+
+class CellDelete(BaseModel):
+    id: int
+
 class TeacherBase(BaseModel):
     name: str
 

@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session
 
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.schemas import CellBase, CellCreate
-from app.crud import get_cell, create_cell_db
+from app.schemas import CellBase, CellCreate, CellDelete, CellUpdate
+from app.crud import delete_cell_db, get_cell, create_cell_db, get_cell_by_id, update_cell_db
 from app.database import SessionLocal
+from app.models import Cell
 
 app = FastAPI()
 
@@ -30,16 +31,11 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/")
-def hello_world():
-    return {"Hello" : "world!"}
-
-@app.get("/cells/{cell_id}", response_model=CellBase)
-def read_cell(cell_id: int, db: Session = Depends(get_db)):
-    db_cell = get_cell(db, cell_id=cell_id)
-    if db_cell is None:
-        raise HTTPException(status_code=404, detail="Cell not found")
-    return db_cell
+# 셀 정보 관련 CRUD
+@app.get("/cells/", response_model=list[CellBase])
+def read_all_cell(db: Session = Depends(get_db)):
+    db_cells = db.query(Cell).all()
+    return db_cells
 
 @app.post("/cell/", response_model=CellBase)
 def create_cell(cell: CellCreate, db: Session = Depends(get_db)):
@@ -47,3 +43,16 @@ def create_cell(cell: CellCreate, db: Session = Depends(get_db)):
     if db_cell:
         raise HTTPException(status_code=400, detail="Cell already exists")
     return create_cell_db(db=db, cell=cell)
+
+@app.put("/cell/", response_model=CellBase)
+def edit_cell(cell: CellUpdate, db: Session = Depends(get_db)):
+    return update_cell_db(db=db, cell_id=cell.id, updated_cell=cell)
+
+@app.delete("/cell/", response_model=None)
+def delete_cell(cell: CellDelete, db: Session = Depends(get_db)):
+    db_cell = get_cell_by_id(db, cell_id=cell.id)
+    if not db_cell:
+        raise HTTPException(status_code=404, detail="Cell not found")
+
+    delete_cell_db(db=db, cell=db_cell)
+    return {"message": "Cell deleted successfully"}

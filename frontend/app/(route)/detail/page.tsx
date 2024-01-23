@@ -4,7 +4,7 @@ import CellInfo from "@/app/_components/CellInfo";
 import { cellInfoMock } from "@/app/_const/mock";
 import classNames from "classnames";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Input } from "@material-tailwind/react";
 import Check from "../../../public/check.svg"
 import Cancle from "../../../public/cancle.svg"
@@ -44,74 +44,76 @@ const CellDetail = () => {
     }
 
     return (
-        <div className="flex flex-col bg-white w-full h-[100vh] px-[16px] pt-[16px] space-y-[25px]">
-            <BackTopBar />
-            <div className="flex flex-col space-y-[12px]">
-                <div onClick={() => {
-                    changeToEditMode()
-                }}>
-                    {
-                        isEditable ? (
-                            <div className="flex flex-row w-full">
-                                <div className="border-[1px] border-lightGray p-[8px] rounded-[8px]">
-                                    <Input variant="static" value={cellName} placeholder="셀이름" crossOrigin={undefined} onChange={handleChange} containerProps={{
-                                        className: "text-[24px] text-black font-bold",
-                                    }} />
-                                </div>
-                                <div className="ml-auto flex">
-                                    <div onClick={handleCellNameSubmit}>
-                                        <Check />
+        <Suspense fallback={<div>Loading...</div>}>
+            <div className="flex flex-col bg-white w-full h-[100vh] px-[16px] pt-[16px] space-y-[25px]">
+                <BackTopBar />
+                <div className="flex flex-col space-y-[12px]">
+                    <div onClick={() => {
+                        changeToEditMode()
+                    }}>
+                        {
+                            isEditable ? (
+                                <div className="flex flex-row w-full">
+                                    <div className="border-[1px] border-lightGray p-[8px] rounded-[8px]">
+                                        <Input variant="static" value={cellName} placeholder="셀이름" crossOrigin={undefined} onChange={handleChange} containerProps={{
+                                            className: "text-[24px] text-black font-bold",
+                                        }} />
                                     </div>
-                                    <div onClick={handleCancleNameChange}>
-                                        <Cancle />
+                                    <div className="ml-auto flex">
+                                        <div onClick={handleCellNameSubmit}>
+                                            <Check />
+                                        </div>
+                                        <div onClick={handleCancleNameChange}>
+                                            <Cancle />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        ) : (
-                            <span className="text-[24px] text-black font-bold">{data?.name}</span>
-                        )
-                    }
-                </div>
-                <div className="flex">
-                    <div className="flex space-x-[4px] justify-center items-center">
-                        <span className="text-[20px] text-naturalGray font-medium">총 인원</span>
-                        <div className="px-[6px] py-[2px] rounded-[8px] bg-brown">
-                            <span className="text-[14px] text-white font-medium">{data?.student_info?.length}명</span>
+                            ) : (
+                                <span className="text-[24px] text-black font-bold">{data?.name}</span>
+                            )
+                        }
+                    </div>
+                    <div className="flex">
+                        <div className="flex space-x-[4px] justify-center items-center">
+                            <span className="text-[20px] text-naturalGray font-medium">총 인원</span>
+                            <div className="px-[6px] py-[2px] rounded-[8px] bg-brown">
+                                <span className="text-[14px] text-white font-medium">{data?.student_info?.length}명</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <CellInfo activeCellId={id} />
-            <div className="flex flex-row space-x-[4px] w-full">
-                <div
-                    onClick={() => {
-                        router.push('/person')
-                    }}
-                    className={classNames(
-                        "cursor-pointer px-[28px] py-[12px] rounded-[8px] bg-brown mt-auto",
+                <CellInfo activeCellId={id} />
+                <div className="flex flex-row space-x-[4px] w-full">
+                    <div
+                        onClick={() => {
+                            router.push('/person')
+                        }}
+                        className={classNames(
+                            "cursor-pointer px-[28px] py-[12px] rounded-[8px] bg-brown mt-auto",
 
-                    )}
-                >
-                    <span className={classNames("font-medium text-[15px] text-white")}>
-                        인원 추가
-                    </span>
-                </div>
-                <div
-                    onClick={() => {
-                        console.log('보고서 작성');
-                    }}
-                    className={classNames(
-                        "cursor-pointer px-[28px] py-[12px] rounded-[8px] bg-brown mt-auto",
+                        )}
+                    >
+                        <span className={classNames("font-medium text-[15px] text-white")}>
+                            인원 추가
+                        </span>
+                    </div>
+                    <div
+                        onClick={() => {
+                            console.log('보고서 작성');
+                        }}
+                        className={classNames(
+                            "cursor-pointer px-[28px] py-[12px] rounded-[8px] bg-brown mt-auto",
 
-                    )}
-                >
-                    <span className={classNames("font-medium text-[15px] text-white")}>
-                        보고서 작성
-                    </span>
+                        )}
+                    >
+                        <span className={classNames("font-medium text-[15px] text-white")}>
+                            보고서 작성
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Suspense>
     )
 }
 

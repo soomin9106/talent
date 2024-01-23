@@ -1,0 +1,8 @@
+/backend/.venv
+/backend/sql_app.db
+/backend/migrations
+/backend/alembic.ini
+/backend/sql_app.db
+/backend/app/.pytest_cache
+/backend/.pytest_cache
+/backend/myapi.db

@@ -3,6 +3,7 @@ import { CellInfo, CellInfoProps } from "../_const/interfaces"
 import StudentInfo from "./StudentInfo"
 import { cellInfoMock } from "../_const/mock"
 import classNames from "classnames"
+import { Suspense } from "react"
 
 const CellInfo = ({ activeCellId }: CellInfoProps) => {
 
@@ -14,37 +15,39 @@ const CellInfo = ({ activeCellId }: CellInfoProps) => {
     })
 
     return (
-        <div className="w-full flex flex-col space-y-[12px]">
-            <div className="w-full bg-white flex shadow-sm px-[8px] py-[8px] rounded-[8px] space-x-[42px] items-center">
-                <div>
-                    <span className="text-black text-[14px] font-medium">이름</span>
+        <Suspense fallback={<div>Loading...</div>}>
+            <div className="w-full flex flex-col space-y-[12px]">
+                <div className="w-full bg-white flex shadow-sm px-[8px] py-[8px] rounded-[8px] space-x-[42px] items-center">
+                    <div>
+                        <span className="text-black text-[14px] font-medium">이름</span>
+                    </div>
+                    <div className="border rounded-[10px] p-[4px]">
+                        <span className="text-black text-[14px] font-medium">학년</span>
+                    </div>
+                    <div className="flex flex-col space-y-[4px]">
+                        <span className="text-black text-[14px] font-medium">zone</span>
+                    </div>
+                    <div>
+                        <span className="text-black text-[14px] font-medium">달란트</span>
+                    </div>
                 </div>
-                <div className="border rounded-[10px] p-[4px]">
-                    <span className="text-black text-[14px] font-medium">학년</span>
-                </div>
-                <div className="flex flex-col space-y-[4px]">
-                    <span className="text-black text-[14px] font-medium">zone</span>
-                </div>
-                <div>
-                    <span className="text-black text-[14px] font-medium">달란트</span>
-                </div>
+                {
+                    activeCellId ? (
+                        <>
+                            {
+                                data?.student_info?.map((student) => {
+                                    return (
+                                        <StudentInfo key={student.name} id={student.id} name={student.name} grade={student.grade} zone={student.zone} talent={student.talent} />
+                                    )
+                                })
+                            }
+                        </>
+                    ) : (
+                        <></>
+                    )
+                }
             </div>
-            {
-                activeCellId ? (
-                    <>
-                        {
-                            data?.student_info?.map((student) => {
-                                return (
-                                    <StudentInfo key={student.name} id={student.id} name={student.name} grade={student.grade} zone={student.zone} talent={student.talent} />
-                                )
-                            })
-                        }
-                    </>
-                ) : (
-                    <></>
-                )
-            }
-        </div>
+        </Suspense>
     )
 }
 

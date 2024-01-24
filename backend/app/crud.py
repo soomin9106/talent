@@ -52,9 +52,23 @@ def create_teacher(db: Session, item: TeacherCreate, cell_id: int):
     db.refresh(db_item)
     return db_item
 
-def create_child(db: Session, item: ChildCreate, cell_id: int):
-    db_item = Child(**item.model_dump(), cell_id = cell_id)
+def create_child_db(db: Session, child: ChildCreate, cell_id: int):
+    db_item = Child(**child.model_dump(), cell_id = cell_id)
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
     return db_item
+
+def update_child_db(db: Session, child_id: int, updated_child: ChildCreate):
+    db_child = db.query(Child).filter(Child.id == child_id).first()
+
+    if db_child:
+        db_child.name = updated_child.name
+        db_child.grade = updated_child.grade
+        db_child.zone = updated_child.zone
+        db_child.talent = updated_child.talent
+        db.add(db_child)
+        db.commit()
+        return db_child
+    else:
+        raise HTTPException(status_code=404, detail="Child not found")

@@ -28,6 +28,7 @@ class TeacherCreate(TeacherBase):
     pass
 
 class ChildBase(BaseModel):
+    id: int
     name: str
     grade: int
     zone: str

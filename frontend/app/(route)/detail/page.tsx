@@ -9,18 +9,21 @@ import { Input } from "@material-tailwind/react";
 import Check from "../../../public/check.svg"
 import Cancle from "../../../public/cancle.svg"
 import BackTopBar from "@/app/_components/BackTopBar";
+import { PerCell } from "@/app/_const/interfaces";
+import { useQuery } from "@tanstack/react-query";
+import { getCellsById } from "@/app/_utils/functions";
 
 const CellDetail = () => {
     const params = useSearchParams();
     const id = Number(params.get('id'))
     const router = useRouter()
 
-    //Filter from mock data - about specific cell
-    const data = cellInfoMock.find((cell: CellInfo) => {
-        if (cell.id === id) {
-            return cell
-        }
-    })
+    // 셀 관련 정보 읽기
+    const { data } = useQuery<PerCell>({
+        queryKey: [`cell-${id}`],
+        queryFn: () => getCellsById({cell_id: id}),
+        staleTime: 5 * 1000,
+    });
 
     const [cellName, setCellName] = useState(data?.name)
     const [isEditable, setIsEditable] = useState(false)
@@ -78,7 +81,7 @@ const CellDetail = () => {
                         <div className="flex space-x-[4px] justify-center items-center">
                             <span className="text-[20px] text-naturalGray font-medium">총 인원</span>
                             <div className="px-[6px] py-[2px] rounded-[8px] bg-brown">
-                                <span className="text-[14px] text-white font-medium">{data?.student_info?.length}명</span>
+                                <span className="text-[14px] text-white font-medium">{data?.children_count}명</span>
                             </div>
                         </div>
                     </div>
@@ -87,7 +90,7 @@ const CellDetail = () => {
                 <div className="flex flex-row space-x-[4px] w-full">
                     <div
                         onClick={() => {
-                            router.push('/person')
+                            router.push(`/person?cell_id=${id}`)
                         }}
                         className={classNames(
                             "cursor-pointer px-[28px] py-[12px] rounded-[8px] bg-brown mt-auto",

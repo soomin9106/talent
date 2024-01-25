@@ -10,6 +10,14 @@ class CellBase(BaseModel):
     class Config:
         orm_mode = True
 
+class CellBaseInfo(BaseModel):
+    id: int
+    name: str
+    children_count: int
+
+    class Config:
+        orm_mode = True
+
 class CellCreateBase(BaseModel):
     name: str
 
@@ -35,7 +43,6 @@ class TeacherCreate(TeacherBase):
     pass
 
 class ChildBase(BaseModel):
-    id: int
     name: str
     grade: int
     zone: str
@@ -46,3 +53,6 @@ class ChildBase(BaseModel):
 
 class ChildCreate(ChildBase):
     pass
+
+class ChildUpdate(ChildBase):
+    id: int

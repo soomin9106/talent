@@ -1,6 +1,6 @@
 // 왼쪽 사이드 navbar props 정리
 export interface NavbarProps {
-    cellList: Cell[]
+    cellList: Cell[] | undefined
     activeCellId: number | null
     setActiveCellId: React.Dispatch<React.SetStateAction<number | null>>
 }
@@ -9,6 +9,10 @@ export interface NavbarProps {
 export interface Cell {
     name: string
     id: number
+}
+
+export interface CellPost {
+    name: string
 }
 
 // Cellinfo - 각 셀 정보 관련

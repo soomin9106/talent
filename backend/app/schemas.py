@@ -4,12 +4,19 @@ from pydantic import BaseModel
 
 # Pydantic 모델 정의
 class CellBase(BaseModel):
+    id: int
     name: str
 
     class Config:
         orm_mode = True
 
-class CellCreate(CellBase):
+class CellCreateBase(BaseModel):
+    name: str
+
+    class Config:
+        orm_mode = True
+
+class CellCreate(CellCreateBase):
     pass
 
 class CellUpdate(CellBase):

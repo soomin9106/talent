@@ -1,20 +1,25 @@
 'use client'
 import BackTopBar from "@/app/_components/BackTopBar";
+import { addCell } from "@/app/_utils/functions";
 import { Input } from "@material-tailwind/react"
 import classNames from "classnames";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const AddCell = () => {
     const [name, setName] = useState('')
+    const router = useRouter()
 
     const handleChange = (event: { target: { value: any; }; }) => {
         setName(event.target.value)
     }
 
-    const onClickCellAdd = () => {
-        console.log('셀 추가 API call');
-        console.log(name);
+    const onClickCellAdd = async () => {
+        const response = addCell({ name })
         
+        if ((await response).status === 200) {
+            router.back()
+        }
     }
     return (
         <div className="bg-white flex flex-col space-y-[20px] w-full h-[100vh] p-[16px]">

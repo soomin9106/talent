@@ -22,7 +22,7 @@ const Navbar = ({ cellList, activeCellId, setActiveCellId }: NavbarProps) => {
                     <span className="font-bold text-[20px] text-black">예명 아동부</span>
                 </div>
                 <div className="flex flex-col items-center space-y-[15px]">
-                    {cellList.map((value, index) => (
+                    {cellList?.map((value, index) => (
                         <div
                             key={index}
                             className={classNames(

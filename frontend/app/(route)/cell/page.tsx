@@ -1,6 +1,9 @@
 "use client"
 import CellInfo from "@/app/_components/CellInfo";
 import Navbar from "@/app/_components/Navbar"
+import { Cell } from "@/app/_const/interfaces";
+import { getCells } from "@/app/_utils/functions";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -15,37 +18,16 @@ const ContentDiv = styled.div`
 const Cell = () => {
     const [activeCellId, setActiveCellId] = useState<number | null>(null)
 
-    // mock data (temp) - api call 필요
-    const cellList = [
-        {
-            id: 1,
-            name: "대한민국"
-        },
-        {
-            id: 2,
-            name: "일본"
-        },
-        {
-            id: 3,
-            name: "대만"
-        },
-        {
-            id: 4,
-            name: "스위스"
-        },
-        {
-            id: 5,
-            name: "영국"
-        },
-        {
-            id: 6,
-            name: "이스라엘"
-        }
-    ]
+    const { data } = useQuery<Cell[]>({
+        queryKey: ["cells-list"],
+        queryFn: () => getCells(),
+        staleTime: 5 * 1000,
+    });
+
     return (
         <div className="w-full flex">
             <NavDiv>
-                <Navbar activeCellId={activeCellId} setActiveCellId={setActiveCellId} cellList={cellList} />
+                <Navbar activeCellId={activeCellId} setActiveCellId={setActiveCellId} cellList={data} />
             </NavDiv>
         </div>
     )

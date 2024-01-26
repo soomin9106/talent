@@ -18,11 +18,7 @@ const AddPerson = () => {
     const [talent, setTalent] = useState(0)
 
     const onClickPersonAdd = async () => {
-        // console.log(name);
-        // console.log(grade);
-        // console.log(zone);
-        // console.log(talent);
-
+        
         const response = addChild(cell_id, { name, grade, zone, talent })
 
         if ((await response).status === 200) {

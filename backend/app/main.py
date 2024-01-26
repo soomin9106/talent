@@ -5,7 +5,7 @@ from sqlalchemy.orm import joinedload
 
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.schemas import CellBase, CellBaseInfo, CellCreate, CellDelete, CellUpdate, ChildBase, ChildCreate, ChildUpdate
+from app.schemas import CellBase, CellBaseInfo, CellCreate, CellDelete, CellUpdate, ChildBase, ChildBaseInfo, ChildCreate, ChildUpdate
 from app.crud import create_child_db, delete_cell_db, get_cell, create_cell_db, get_cell_by_id, update_cell_db, update_child_db
 from app.database import SessionLocal
 from app.models import Cell, Child
@@ -21,7 +21,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  # Update this to the specific origins you want to allow
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -86,15 +86,25 @@ def delete_cell(cell: CellDelete, db: Session = Depends(get_db)):
 def create_child(child: ChildCreate, cell_id: int, db: Session = Depends(get_db)):
     return create_child_db(db, child, cell_id)
 
-@app.get("/children/{cell_id}", response_model=list[ChildBase])
+@app.get("/children/{cell_id}", response_model=list[ChildBaseInfo])
 def read_all_children(cell_id: int, db: Session = Depends(get_db)):
     db_children = db.query(Child).filter(Child.cell_id == cell_id).all()
 
-    if not db_children:
-        raise HTTPException(status_code=404, detail="No children found for the given cell_id")
+    # if not db_children:
+    #     raise HTTPException(status_code=404, detail="No children found for the given cell_id")
 
     return db_children
 
-@app.put("/child/", response_model=ChildUpdate)
-def edit_child(child: ChildCreate, db: Session = Depends(get_db)):
-    return update_child_db(db=db, child_id=child.id, updated_child=child)
+@app.get("/child/{student_id}", response_model=ChildBase)
+def read_one_child(student_id: int, db: Session = Depends(get_db)):
+    db_child = db.query(Child).filter(Child.id == student_id).first()
+
+    if not db_child:
+        raise HTTPException(status_code=404, detail="No children found for the given student id")
+
+    return db_child
+
+
+@app.put("/child/{student_id}", response_model=ChildUpdate)
+def edit_child(student_id: int, child: ChildCreate, db: Session = Depends(get_db)):
+    return update_child_db(db=db, child_id=student_id, updated_child=child)

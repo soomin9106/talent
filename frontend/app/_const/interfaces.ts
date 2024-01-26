@@ -21,6 +21,10 @@ export interface CellPost {
     name: string
 }
 
+export interface CellUpdate extends CellPost {
+    id: number
+}
+
 // Cellinfo - 각 셀 정보 관련
 export interface CellInfoProps {
     activeCellId: number | null
@@ -28,6 +32,10 @@ export interface CellInfoProps {
 
 export interface ChildrenGet {
     cell_id: number
+}
+
+export interface ChildGet {
+    student_id: number
 }
 
 export interface StudentInfoProps {

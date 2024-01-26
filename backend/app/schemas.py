@@ -51,6 +51,16 @@ class ChildBase(BaseModel):
     class Config:
         orm_mode = True
 
+class ChildBaseInfo(BaseModel):
+    id: int
+    name: str
+    grade: int
+    zone: str
+    talent: int
+
+    class Config:
+        orm_mode = True
+
 class ChildCreate(ChildBase):
     pass
 

@@ -11,5 +11,7 @@ COPY . /app
 RUN python -m venv venv
 RUN /bin/bash -c "source venv/bin/activate && pip install -r requirements.txt"
 
+RUN pip install uvicorn
+
 # 컨테이너가 시작될 때 실행할 명령
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

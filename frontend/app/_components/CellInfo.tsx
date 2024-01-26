@@ -1,18 +1,22 @@
 import { act } from "react-dom/test-utils"
-import { CellInfo, CellInfoProps } from "../_const/interfaces"
+import { CellInfoProps,  StudentInfoProps } from "../_const/interfaces"
 import StudentInfo from "./StudentInfo"
 import { cellInfoMock } from "../_const/mock"
 import classNames from "classnames"
 import { Suspense } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { getChildren } from "../_utils/functions"
+import { useSearchParams } from "next/navigation"
 
 const CellInfo = ({ activeCellId }: CellInfoProps) => {
+    const params = useSearchParams();
+    const id = Number(params.get('id'))
 
-    //Filter from mock data - about specific cell
-    const data = cellInfoMock.find((cell: CellInfo) => {
-        if (cell.id === activeCellId) {
-            return cell
-        }
-    })
+    const { data } = useQuery<StudentInfoProps[]>({
+        queryKey: [`children-list-${activeCellId}`],
+        queryFn: () => getChildren({ cell_id: id }),
+        staleTime: 0,
+    });
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
@@ -35,7 +39,7 @@ const CellInfo = ({ activeCellId }: CellInfoProps) => {
                     activeCellId ? (
                         <>
                             {
-                                data?.student_info?.map((student) => {
+                                data?.map((student) => {
                                     return (
                                         <StudentInfo key={student.name} id={student.id} name={student.name} grade={student.grade} zone={student.zone} talent={student.talent} />
                                     )

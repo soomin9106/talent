@@ -11,13 +11,31 @@ export interface Cell {
     id: number
 }
 
+export interface PerCell {
+    name: string
+    id: number
+    children_count: number
+}
+
 export interface CellPost {
     name: string
+}
+
+export interface CellUpdate extends CellPost {
+    id: number
 }
 
 // Cellinfo - 각 셀 정보 관련
 export interface CellInfoProps {
     activeCellId: number | null
+}
+
+export interface ChildrenGet {
+    cell_id: number
+}
+
+export interface ChildGet {
+    student_id: number
 }
 
 export interface StudentInfoProps {
@@ -28,7 +46,14 @@ export interface StudentInfoProps {
     talent: number;
 }
 
-export interface CellInfo {
+export interface IStudentInfo {
+    name: string;
+    grade: any;
+    zone: string;
+    talent: any;
+}
+
+export interface ICellInfo {
     id: number;
     name: string;
     member_count: number;

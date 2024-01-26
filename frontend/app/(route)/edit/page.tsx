@@ -1,9 +1,11 @@
 'use client'
 import BackTopBar from "@/app/_components/BackTopBar"
+import { IStudentInfo } from "@/app/_const/interfaces"
 import { cellInfoMock } from "@/app/_const/mock"
 import { gradeOptions, zoneOptions } from "@/app/_const/options"
-import { handleChange } from "@/app/_utils/functions"
+import { editChild, getChild, handleChange } from "@/app/_utils/functions"
 import { Input, Select, Option } from "@material-tailwind/react"
+import { useQuery } from "@tanstack/react-query"
 import classNames from "classnames"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
@@ -22,27 +24,54 @@ const EditStudentInfo = () => {
         return s.id === Number(studentId)
     })
 
-    const [name, setName] = useState<string | undefined>(student?.name)
-    const [grade, setGrade] = useState<string | undefined>(String(student?.grade))
-    const [zone, setZone] = useState<string | undefined>(student?.zone)
+    const { data } = useQuery<IStudentInfo>({
+        queryKey: [`cell-child-${studentId}`],
+        queryFn: () => getChild({ student_id: studentId }),
+        
+    });
+    
+    const [name, setName] = useState("")
+    const [grade, setGrade] = useState("")
+    const [zone, setZone] = useState("")
 
-    const [wordTalent, setWordTalent] = useState()
-    const [prayTalent, setPrayTalent] = useState()
+    const [wordTalent, setWordTalent] = useState("")
+    const [prayTalent, setPrayTalent] = useState("")
+    const [ectTalent, setEctTalent] = useState("")
 
-    const onClickPersonEdit = () => {
+    const onClickPersonEdit = async () => {
         console.log('정보 수정');
-        console.log(name);
-        console.log(grade);
-        console.log(zone);
+        
 
+        const editedName = name?.length >= 1 ? name : data ? data.name : ""
+        const editedGrade = grade?.length >= 1 ? grade : data ? data.grade : 1
+        const editedZone = zone?.length >= 1 ? zone : data ? data.zone : "New"
+        const cal_word = wordTalent.length >= 1 ? Number(wordTalent) : 0
+        const cal_pray = prayTalent.length >= 1 ? Number(prayTalent) : 0
+        const cal_ect = ectTalent.length >= 1 ? Number(ectTalent) : 0
+
+        const totalTalent = data?.talent + (cal_word * 2) + (cal_pray * 3) + cal_ect
+
+        console.log(editedName);
+        console.log(editedGrade);
+        console.log(editedZone);
+        console.log(totalTalent);
+
+        const response = editChild(studentId, { name: editedName, grade: editedGrade, zone: editedZone, talent: totalTalent })
+
+        if ((await response).status === 200) {
+            router.back()
+        }
     }
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <div className="bg-white flex flex-col space-y-[20px] w-full h-[100vh] p-[16px]">
                 <BackTopBar />
-                <div>
+                <div className="flex flex-col space-y-[4px]">
                     <span className="font-medium text-[24px] text-black">정보 수정</span>
+                    <span className="font-medium text-[12px] text-black">
+                        기입하지 않은 사항은 수정되지 않습니다.
+                    </span>
                 </div>
                 <div className="flex flex-col space-y-[10px] w-full">
                     <div className="w-full py-[10px] rounded-[8px] text-[16px] text-black font-medium">
@@ -97,9 +126,9 @@ const EditStudentInfo = () => {
                     <div>
                         <span className="font-medium text-[24px] text-black">달란트 추가</span>
                     </div>
-                    <div className="flex space-x-[4px] w-full py-[10px] rounded-[8px] text-[16px] text-black font-medium">
+                    <div className="flex flex-col space-y-[4px] w-full py-[10px] rounded-[8px] text-[16px] text-black font-medium">
                         <Input
-                            placeholder="말씀 달란트 개수"
+                            placeholder="말씀 달란트 개수 (숫자로 입력)"
                             label="말씀 달란트 개수"
                             crossOrigin={undefined}
                             defaultValue={wordTalent}
@@ -112,12 +141,25 @@ const EditStudentInfo = () => {
                             className="peer w-full h-full bg-transparent text-blue-gray-700 font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
                         />
                         <Input
-                            placeholder="기도 달란트 개수"
+                            placeholder="기도 달란트 개수 (숫자로 입력)"
                             label="기도 달란트 개수"
                             crossOrigin={undefined}
                             defaultValue={prayTalent}
                             onChange={(e) => {
                                 handleChange(e, setPrayTalent)
+                            }}
+                            labelProps={{
+                                className: "",
+                            }}
+                            className="peer w-full h-full bg-transparent text-blue-gray-700 font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
+                        />
+                        <Input
+                            placeholder="그 외 달란트 (숫자로 입력)"
+                            label="그 외 달란트"
+                            crossOrigin={undefined}
+                            defaultValue={ectTalent}
+                            onChange={(e) => {
+                                handleChange(e, setEctTalent)
                             }}
                             labelProps={{
                                 className: "",

@@ -21,4 +21,4 @@ COPY ./backend-key.pem /app/backend-key.pem
 COPY ./backend.pem /app/backend.pem
 
 # 컨테이너가 시작될 때 실행할 명령
-CMD ["/bin/bash", "-c", "source venv/bin/activate && uvicorn app.main:app --ssl-keyfile=./backend-key.pem --ssl-certfile=./backend.pem --host 0.0.0.0 --port 8000 --reload"]
+CMD ["/bin/bash", "-c", "source venv/bin/activate && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]

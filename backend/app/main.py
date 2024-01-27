@@ -22,7 +22,6 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    HTTPSRedirectMiddleware,
     allow_origins=["*"],  # Update this to the specific origins you want to allow
     allow_credentials=True,
     allow_methods=["*"],

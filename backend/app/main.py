@@ -9,6 +9,7 @@ from app.schemas import CellBase, CellBaseInfo, CellCreate, CellDelete, CellUpda
 from app.crud import create_child_db, delete_cell_db, get_cell, create_cell_db, get_cell_by_id, update_cell_db, update_child_db
 from app.database import SessionLocal
 from app.models import Cell, Child
+from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 
 app = FastAPI()
 
@@ -21,6 +22,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
+    HTTPSRedirectMiddleware,
     allow_origins=["*"],  # Update this to the specific origins you want to allow
     allow_credentials=True,
     allow_methods=["*"],

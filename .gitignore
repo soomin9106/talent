@@ -6,3 +6,8 @@
 /backend/app/.pytest_cache
 /backend/.pytest_cache
 /backend/myapi.db
+# Ignore security-related files
+/backend/*.pem
+
+# Ignore mkcert binary (assuming it's not needed in the project)
+/backend/mkcert-v1.4.4-linux-amd64

@@ -24,4 +24,4 @@ ENV SSL_CERT_PATH=/app/fullchain-key.pem
 ENV SSL_KEY_PATH=/app/privkey1.pem
 
 # 컨테이너가 시작될 때 실행할 명령
-CMD ["/bin/bash", "-c", "source venv/bin/activate && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --ssl-keyfile=$SSL_KEY_PATH --ssl-certfile=$SSL_CERT_PATH"]
+CMD ["/bin/bash", "-c", "source venv/bin/activate && uvicorn app.main:app --host 0.0.0.0 --port 443 --reload --ssl-keyfile=$SSL_KEY_PATH --ssl-certfile=$SSL_CERT_PATH"]

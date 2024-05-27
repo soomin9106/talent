@@ -18,10 +18,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
-export const handleChange = (event: { target: { value: any; }; }, setValue: (arg0: any) => void) => {
-    setValue(event.target.value)
-}
+import { handleChange } from "@/lib/utils"
 
 const EditStudentInfo = () => {
     const params = useSearchParams();

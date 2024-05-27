@@ -5,9 +5,9 @@ import { addChild } from "@/app/_utils/functions";
 import classNames from "classnames"
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react"
-import { handleChange } from "../edit/page";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { handleChange } from "@/lib/utils";
 
 const AddPerson = () => {
     const params = useSearchParams()

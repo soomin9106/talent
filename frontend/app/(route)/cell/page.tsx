@@ -1,5 +1,4 @@
 "use client"
-import CellInfo from "@/app/_components/CellInfo";
 import Navbar from "@/app/_components/Navbar"
 import { Cell } from "@/app/_const/interfaces";
 import { getCells } from "@/app/_utils/functions";

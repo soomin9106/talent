@@ -42,13 +42,13 @@ const Home = () => {
     <Container>
       <HeaderWrapper>
         <div>
-          <span className='font-bold'>예명교회 아동부</span>
+          <span className='text-white font-bold'>예명교회 아동부</span>
         </div>
         <MenuWrapper>
           <div className='cursor-pointer' onClick={() => {
             router.push('/cell')
           }}>
-            <span className='font-bold'>셀별로 확인하기</span>
+            <span className='text-white font-bold'>셀별로 확인하기</span>
           </div>
         </MenuWrapper>
       </HeaderWrapper>

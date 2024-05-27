@@ -1,8 +1,6 @@
 import { act } from "react-dom/test-utils"
 import { CellInfoProps,  StudentInfoProps } from "../_const/interfaces"
 import StudentInfo from "./StudentInfo"
-import { cellInfoMock } from "../_const/mock"
-import classNames from "classnames"
 import { Suspense } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { getChildren } from "../_utils/functions"
@@ -41,7 +39,7 @@ const CellInfo = ({ activeCellId }: CellInfoProps) => {
                             {
                                 data?.map((student) => {
                                     return (
-                                        <StudentInfo key={student.name} id={student.id} name={student.name} grade={student.grade} zone={student.zone} talent={student.talent} />
+                                        <StudentInfo key={student.name} id={student.id} name={student.name} grade={student.grade} zone={student.zone} talent={student.talent} cellId={student.cellId}/>
                                     )
                                 })
                             }

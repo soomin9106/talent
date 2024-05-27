@@ -1,111 +1,132 @@
-import axios from "axios";
-import { CellPost, CellUpdate, ChildGet, ChildrenGet, IStudentInfo } from "../_const/interfaces";
-
-export const handleChange = (event: { target: { value: any; }; }, setValue: (arg0: any) => void) => {
-    setValue(event.target.value)
-}
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_SERVER
+'use server'
+import prisma from "@/lib/prisma";
+import { CellPost, CellUpdate, ChildGet, ChildrenGet, ICellInfo, IEditStudentInfo, IStudentInfo, StudentInfoProps } from "../_const/interfaces";
+const fs = require('fs').promises;
+const path = '/Users/imsumin/talent/frontend/app/data.json';
 
 export const getCells = async () => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/cells`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching cells:', error);
-        return [];
-    }
+    const cells = await prisma.cell.findMany()
+
+    return cells
 };
 
 export const getCellsById = async ({ cell_id }: ChildrenGet) => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/cell/${cell_id}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching cell by ID:', error);
-        return {};
+    const cell = await prisma.cell.findUnique({
+        where: {
+            id: cell_id,
+        },
+    })
+
+    if (cell) {
+        return cell
     }
+
+    return { id: 0, name: "", }
 };
 
 export const addCell = async ({ name }: CellPost) => {
     try {
-        const payload = {
-            name
-        };
-        const response = await axios.post(`${API_BASE_URL}/cell`, payload);
-        return response;
-    } catch (error) {
-        console.error('Error adding cell:', error);
-        throw error; // Optionally rethrow the error if needed
+        const cell = await prisma.cell.create({
+            data: {
+                name: name
+            },
+        })
+
+        return { cell: cell, status: 201 }
+    } catch (e) {
+        return { status: 500 }
     }
 };
 
 export const editCell = async ({ id, name }: CellUpdate) => {
     try {
-        const payload = {
-            id,
-            name
-        };
-        const response = await axios.put(`${API_BASE_URL}/cell`, payload);
-        return response;
-    } catch (error) {
-        console.error('Error adding cell:', error);
-        throw error; // Optionally rethrow the error if needed
+        const updateCell = await prisma.cell.update({
+            where: {
+                id: id
+            },
+            data: {
+                name: name
+            },
+        })
+
+        return { updateCell: updateCell, status: 200 }
+
+    } catch (e) {
+        return { statue: 500 }
     }
 };
 
 export const getChildren = async ({ cell_id }: ChildrenGet) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/children/${cell_id}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching children:', error);
-        return [];
+        const children = await prisma.child.findMany({
+            where: {
+                cellId: cell_id
+            },
+        })
+
+        if (children) {
+            return children
+        }
+
+        return [{ id: 0, name: "", grade: 0, zone: "", talent: 0, cellId: 0 }]
+    } catch (e) {
+        return [{ id: 0, name: "", grade: 0, zone: "", talent: 0, cellId: 0 }]
     }
 };
 
 export const addChild = async (cell_id: number, props: IStudentInfo) => {
     try {
-        const payload = {
-            name: props.name,
-            grade: Number(props.grade),
-            zone: props.zone,
-            talent: Number(props.talent),
-        };
-        const response = await axios.post(`${API_BASE_URL}/child/${cell_id}`, payload);
-        return response;
-    } catch (error) {
-        console.error('Error adding child:', error);
-        throw error; // Optionally rethrow the error if needed
+        const newChild = await prisma.child.create({
+            data: {
+                name: props.name,
+                grade: Number(props.grade),
+                zone: props.zone,
+                talent: Number(props.talent),
+                cellId: cell_id
+            },
+        })
+
+        return { status: 200, newChild: newChild }
+    } catch (e) {
+        return { status: 500, error: e }
     }
 };
 
-export const editChild = async (student_id: number, props: IStudentInfo) => {
+export const editChild = async ({ cell_id, student_id, updatedStudent }: IEditStudentInfo) => {
     try {
-        const payload = {
-            name: props.name,
-            grade: Number(props.grade),
-            zone: props.zone,
-            talent: Number(props.talent),
-        };
-        const response = await axios.put(`${API_BASE_URL}/child/${student_id}`, payload);
-        return response;
-    } catch (error) {
-        console.error('Error adding child:', error);
-        throw error; // Optionally rethrow the error if needed
+        const updateChild = await prisma.child.update({
+            where: {
+                id: student_id,
+                cellId: cell_id
+            },
+            data: {
+                zone: updatedStudent.zone,
+                talent: updatedStudent.talent
+            },
+        })
+
+        return { ...updateChild } // 성공 시 업데이트된 자식 정보 반환
+    } catch (e) {
+        return { status: 500 } // 실패 시 에러 상태 반환
     }
 };
 
-export const getChild = async ({ student_id }: ChildGet) => {
+
+export const getChild = async ({ cell_id, student_id }: ChildGet) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/child/${student_id}`);
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            return {};
+        const child = await prisma.child.findUnique({
+            where: {
+                id: student_id,
+                cellId: cell_id
+            },
+        })
+    
+        if (child) {
+            return child
         }
-    } catch (error) {
-        console.error('Error fetching child:', error);
-        return {};
+    
+        return { id: 0, name: "", grade: 0, zone: "", talent: 0, cellId: 0 }
+    } catch (e) {
+        return { id: 0, name: "", grade: 0, zone: "", talent: 0, cellId: 0 }
     }
 };

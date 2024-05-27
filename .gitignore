@@ -11,3 +11,5 @@
 
 # Ignore mkcert binary (assuming it's not needed in the project)
 /backend/mkcert-v1.4.4-linux-amd64
+
+.env

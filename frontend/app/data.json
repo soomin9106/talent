@@ -1,0 +1,303 @@
+[
+  {
+    "id": 1,
+    "name": "예수님의 말씀셀",
+    "children_count": 7,
+    "student_info": [
+      {
+        "id": 1,
+        "name": "김하은",
+        "grade": 1,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 2,
+        "name": "정하성",
+        "grade": 1,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 3,
+        "name": "예지온",
+        "grade": 1,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 4,
+        "name": "김규빈",
+        "grade": 1,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 5,
+        "name": "전지원",
+        "grade": 1,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 6,
+        "name": "이시우",
+        "grade": 1,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 7,
+        "name": "이서호",
+        "grade": 1,
+        "zone": "Green",
+        "talent": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "2,3학년셀",
+    "children_count": 5,
+    "student_info": [
+      {
+        "id": 8,
+        "name": "이다원",
+        "grade": 3,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 9,
+        "name": "김한수",
+        "grade": 2,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 10,
+        "name": "김단우",
+        "grade": 3,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 11,
+        "name": "구나현",
+        "grade": 3,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 12,
+        "name": "임하영",
+        "grade": 3,
+        "zone": "Green",
+        "talent": 0
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "4학년 남자셀",
+    "children_count": 3,
+    "student_info": [
+      {
+        "id": 13,
+        "name": "윤해민",
+        "grade": 4,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 14,
+        "name": "노은찬",
+        "grade": 4,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 15,
+        "name": "김서준",
+        "grade": 4,
+        "zone": "Green",
+        "talent": 0
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "핀란드셀",
+    "children_count": 4,
+    "student_info": [
+      {
+        "id": 16,
+        "name": "윤아인",
+        "grade": 4,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 17,
+        "name": "박지원",
+        "grade": 4,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 18,
+        "name": "김하선",
+        "grade": 4,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 19,
+        "name": "원예은",
+        "grade": 4,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 20,
+        "name": "오승현",
+        "grade": 4,
+        "zone": "New",
+        "talent": 0
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "5학년셀",
+    "children_count": 6,
+    "student_info": [
+      {
+        "id": 20,
+        "name": "박엘린",
+        "grade": 5,
+        "zone": "Green",
+        "talent": 20
+      },
+      {
+        "id": 21,
+        "name": "조다니엘",
+        "grade": 5,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 22,
+        "name": "반정민",
+        "grade": 5,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 23,
+        "name": "임하성",
+        "grade": 5,
+        "zone": "Gray",
+        "talent": 0
+      },
+      {
+        "id": 24,
+        "name": "박준영",
+        "grade": 5,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 25,
+        "name": "조은서",
+        "grade": 5,
+        "zone": "Gray",
+        "talent": 0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "프랑스셀",
+    "children_count": 4,
+    "student_info": [
+      {
+        "id": 26,
+        "name": "김예원",
+        "grade": 5,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 27,
+        "name": "박채아",
+        "grade": 5,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 28,
+        "name": "윤려원",
+        "grade": 5,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 29,
+        "name": "정윤진",
+        "grade": 5,
+        "zone": "Green",
+        "talent": 0
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "6학년셀",
+    "children_count": 6,
+    "student_info": [
+      {
+        "id": 30,
+        "name": "김예경",
+        "grade": 6,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 31,
+        "name": "이가을",
+        "grade": 6,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 32,
+        "name": "김세아",
+        "grade": 6,
+        "zone": "Green",
+        "talent": 0
+      },
+      {
+        "id": 33,
+        "name": "김재준",
+        "grade": 6,
+        "zone": "Gray",
+        "talent": 0
+      },
+      {
+        "id": 34,
+        "name": "이현석",
+        "grade": 6,
+        "zone": "Gray",
+        "talent": 0
+      },
+      {
+        "id": 35,
+        "name": "전용준",
+        "grade": 6,
+        "zone": "Gray",
+        "talent": 0
+      }
+    ]
+  }
+]

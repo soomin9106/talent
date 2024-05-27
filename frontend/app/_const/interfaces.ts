@@ -14,7 +14,6 @@ export interface Cell {
 export interface PerCell {
     name: string
     id: number
-    children_count: number
 }
 
 export interface CellPost {
@@ -35,6 +34,7 @@ export interface ChildrenGet {
 }
 
 export interface ChildGet {
+    cell_id: number
     student_id: number
 }
 
@@ -44,6 +44,7 @@ export interface StudentInfoProps {
     grade: number;
     zone: string;
     talent: number;
+    cellId: number
 }
 
 export interface IStudentInfo {
@@ -58,4 +59,10 @@ export interface ICellInfo {
     name: string;
     member_count: number;
     student_info: StudentInfoProps[];
+}
+
+export interface IEditStudentInfo {
+    cell_id: number
+    student_id: number
+    updatedStudent: StudentInfoProps
 }

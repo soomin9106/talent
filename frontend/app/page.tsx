@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import styled from "styled-components";
 import { useRouter } from 'next/navigation';
 import { sendGAEvent } from '@next/third-parties/google'
+import Script from 'next/script'
 
 const Container = styled.div`
   display: flex;
@@ -41,17 +42,28 @@ const GifImage = styled.img`
 const Home = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    // 페이지 로드 시 Google Analytics 이벤트 전송
-    sendGAEvent({
-      action: 'page_view',
-      category: 'Home',
-      label: 'Main Page',
-    });
-  }, []);
 
   return (
     <Container>
+      <Script
+        strategy='afterInteractive'
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+      />
+
+      <Script
+        id='ga4_init'
+        strategy='afterInteractive'
+        dangerouslySetInnerHTML={{
+          __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+            page_path: window.location.pathname
+          });
+        `,
+        }}
+      />
       <HeaderWrapper>
         <div>
           <span className='text-white font-bold'>예명교회 아동부</span>

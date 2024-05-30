@@ -4,6 +4,7 @@
 import React from 'react';
 import styled from "styled-components";
 import { useRouter } from 'next/navigation';
+import * as gtag from "lib/gtag";
 
 const Container = styled.div`
   display: flex;
@@ -38,8 +39,43 @@ const GifImage = styled.img`
 
 const Home = () => {
   const router = useRouter()
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <Container>
+      {process.env.NODE_ENV !== "development" && (
+        <>
+          <Head>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', '${gtag.GA_TRACKING_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `,
+              }}
+            />
+          </Head>
+          {/* Global Site Tag (gtag.js) - Google Analytics */}
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+          />
+        </>
+      )}
       <HeaderWrapper>
         <div>
           <span className='text-white font-bold'>예명교회 아동부</span>

@@ -2,7 +2,7 @@
 import Navbar from "@/app/_components/Navbar"
 import { Cell } from "@/app/_const/interfaces";
 import { getCells } from "@/app/_utils/functions";
-import { sendGAEvent } from "@next/third-parties/google";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -26,11 +26,7 @@ const Cell = () => {
 
     useEffect(() => {
         // 페이지 로드 시 Google Analytics 이벤트 전송
-        sendGAEvent({
-          action: 'page_view',
-          category: 'Cell',
-          label: 'Cell Page',
-        });
+        sendGTMEvent({ event: 'page loaded', value: 'xyz' })
       }, []);
 
     return (

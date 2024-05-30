@@ -4,6 +4,7 @@ import { Roboto } from 'next/font/google'
 import './globals.css'
 import Providers from './_utils/Provider'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const roboto = Roboto({ weight: "500", subsets: ['latin'] })
 
@@ -22,7 +23,8 @@ export default function RootLayout({
 
       <body className={roboto.className}>
         <Providers>
-          <GoogleAnalytics gaId={process.env.NEXT_GA_TRACKING_ID ?? ''} />
+          {/* <GoogleAnalytics gaId={process.env.NEXT_GA_TRACKING_ID ?? ''} /> */}
+          <GoogleTagManager gtmId={process.env.NEXT_GTM_ID ?? ''} /> 
           {children}
         </Providers>
       </body>

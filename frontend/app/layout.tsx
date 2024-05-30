@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { Roboto } from 'next/font/google'
 import './globals.css'
 import Providers from './_utils/Provider'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const roboto = Roboto({ weight: "500", subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
 
       <body className={roboto.className}>
+      <GoogleAnalytics gaId={process.env.NEXT_GA_TRACKING_ID ?? ''} />
         <Providers>
           {children}
         </Providers>

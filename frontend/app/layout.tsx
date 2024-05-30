@@ -21,8 +21,8 @@ export default function RootLayout({
     <html lang="en">
 
       <body className={roboto.className}>
-      <GoogleAnalytics gaId={process.env.NEXT_GA_TRACKING_ID ?? ''} />
         <Providers>
+          <GoogleAnalytics gaId={process.env.NEXT_GA_TRACKING_ID ?? ''} />
           {children}
         </Providers>
       </body>

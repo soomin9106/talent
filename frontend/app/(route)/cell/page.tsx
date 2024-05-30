@@ -2,8 +2,9 @@
 import Navbar from "@/app/_components/Navbar"
 import { Cell } from "@/app/_const/interfaces";
 import { getCells } from "@/app/_utils/functions";
+import { sendGAEvent } from "@next/third-parties/google";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const NavDiv = styled.div`
@@ -22,6 +23,15 @@ const Cell = () => {
         queryFn: () => getCells(),
         staleTime: 5 * 1000,
     });
+
+    useEffect(() => {
+        // 페이지 로드 시 Google Analytics 이벤트 전송
+        sendGAEvent({
+          action: 'page_view',
+          category: 'Cell',
+          label: 'Cell Page',
+        });
+      }, []);
 
     return (
         <div className="w-full flex">

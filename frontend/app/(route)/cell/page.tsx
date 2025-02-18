@@ -1,6 +1,6 @@
 "use client"
 import Navbar from "@/app/_components/Navbar"
-import { Cell } from "@/app/_const/interfaces";
+import type { Cell } from "@/app/_const/interfaces";
 import { getCells } from "@/app/_utils/functions";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";

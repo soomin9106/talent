@@ -152,7 +152,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       // 동명이인 처리
       if (children.length > 1 && !cellName) {
-        const cellIds = [...new Set(children.map((c) => c.cellId))];
+        const cellIds = Array.from(new Set(children.map((c) => c.cellId)));
         const cells = await prisma.cell.findMany({ where: { id: { in: cellIds } } });
         const cellMap = Object.fromEntries(cells.map((c) => [c.id, c.name]));
         const list = children.map((c) => `• ${c.name} (${cellMap[c.cellId]} 셀)`).join('\n');

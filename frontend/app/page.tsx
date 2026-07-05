@@ -69,10 +69,15 @@ const Home = () => {
           <span className='text-white font-bold'>예명교회 아동부</span>
         </div>
         <MenuWrapper>
-          <div className='cursor-pointer' onClick={() => {
+          <div className='cursor-pointer mr-[20px]' onClick={() => {
             router.push('/cell');
           }}>
             <span className='text-white font-bold'>셀별로 확인하기</span>
+          </div>
+          <div className='cursor-pointer' onClick={() => {
+            router.push('/attendance');
+          }}>
+            <span className='text-white font-bold'>주일 예배 출석부</span>
           </div>
         </MenuWrapper>
       </HeaderWrapper>

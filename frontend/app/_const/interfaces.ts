@@ -66,3 +66,24 @@ export interface IEditStudentInfo {
     student_id: number
     updatedStudent: StudentInfoProps
 }
+
+// 출석부 관련
+export interface AttendanceChild {
+    id: number
+    name: string
+    grade: number
+    zone: string
+    present: boolean
+}
+
+export interface AttendanceCell {
+    id: number
+    name: string
+    children: AttendanceChild[]
+}
+
+export interface SetAttendance {
+    child_id: number
+    date: string
+    present: boolean
+}

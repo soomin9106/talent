@@ -21,16 +21,27 @@ model Cell {
 model Teacher {
   id        Int     @id @default(autoincrement())
   name      String
-  cellId    Int
-  cell      Cell    @relation("CellTeachers", fields: [cellId], references: [id])
+  cellId    Int?
+  cell      Cell?   @relation("CellTeachers", fields: [cellId], references: [id])
 }
 
 model Child {
-  id        Int     @id @default(autoincrement())
-  name      String
-  grade     Int
-  zone      String
-  talent    Int
-  cellId    Int
-  cell      Cell    @relation("CellChildren", fields: [cellId], references: [id])
+  id          Int          @id @default(autoincrement())
+  name        String
+  grade       Int
+  zone        String
+  talent      Int
+  cellId      Int
+  cell        Cell         @relation("CellChildren", fields: [cellId], references: [id])
+  attendances Attendance[]
+}
+
+model Attendance {
+  id      Int      @id @default(autoincrement())
+  date    DateTime
+  present Boolean  @default(true)
+  childId Int
+  child   Child    @relation(fields: [childId], references: [id])
+
+  @@unique([childId, date])
 }

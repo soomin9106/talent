@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "talent-db-admin": {
+      "command": "/opt/homebrew/bin/npx",
+      "args": ["tsx", "scripts/mcp-server.ts"],
+      "cwd": "/Users/imsumin/talent/frontend",
+      "env": {
+        "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
+    }
+  }
+}

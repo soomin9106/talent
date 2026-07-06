@@ -15,6 +15,7 @@ import {
     setTeacherAttendance,
 } from "@/app/_utils/functions";
 import classNames from "classnames";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -183,9 +184,10 @@ const Attendance = () => {
             <div className="flex items-center space-x-[12px]">
                 <div
                     onClick={() => shiftWeek(-1)}
-                    className="cursor-pointer px-[12px] py-[8px] rounded-[8px] bg-brown"
+                    aria-label="이전 주"
+                    className="cursor-pointer shrink-0 p-[8px] rounded-[8px] bg-brown"
                 >
-                    <span className="font-medium text-[14px] text-white">이전 주</span>
+                    <ChevronLeft size={18} className="text-white" />
                 </div>
                 <input
                     type="date"
@@ -195,9 +197,10 @@ const Attendance = () => {
                 />
                 <div
                     onClick={() => shiftWeek(1)}
-                    className="cursor-pointer px-[12px] py-[8px] rounded-[8px] bg-brown"
+                    aria-label="다음 주"
+                    className="cursor-pointer shrink-0 p-[8px] rounded-[8px] bg-brown"
                 >
-                    <span className="font-medium text-[14px] text-white">다음 주</span>
+                    <ChevronRight size={18} className="text-white" />
                 </div>
                 <div className="ml-auto">
                     <span className="text-[14px] text-black font-medium whitespace-nowrap">

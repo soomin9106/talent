@@ -41,7 +41,15 @@ const Navbar = ({ cellList, activeCellId, setActiveCellId }: NavbarProps) => {
                     ))}
                 </div>
             </nav>
-            <div className="p-12">
+            <div className="p-12 space-y-[12px]">
+                <div
+                    onClick={() => router.push('/attendance')}
+                    className="cursor-pointer px-[28px] py-[10px] rounded-[8px] border border-brown"
+                >
+                    <span className="font-medium text-[15px] text-brown">
+                        주일 예배 출석부
+                    </span>
+                </div>
                 <div
                     onClick={onClickCellAdd}
                     className={classNames(

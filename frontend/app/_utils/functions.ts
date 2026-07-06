@@ -1,6 +1,6 @@
 'use server'
 import prisma from "@/lib/prisma";
-import { CellPost, CellUpdate, ChildGet, ChildrenGet, ICellInfo, IEditStudentInfo, IStudentInfo, SetAttendance, StudentInfoProps } from "../_const/interfaces";
+import { CellPost, CellUpdate, ChildAttendanceStatus, ChildGet, ChildrenGet, ICellInfo, IEditStudentInfo, IStudentInfo, MonthlyAttendanceEntry, SetAttendance, SetTeacherAttendance, StudentInfoProps, TeacherAttendanceStatus } from "../_const/interfaces";
 const fs = require('fs').promises;
 const path = '/Users/imsumin/talent/frontend/app/data.json';
 
@@ -131,12 +131,13 @@ export const getChild = async ({ cell_id, student_id }: ChildGet) => {
     }
 };
 
-// 주일 예배 출석부 - 특정 날짜의 셀/학생별 출석 여부 조회
+// 주일 예배 출석부 - 특정 날짜의 셀/학생별 출석 상태 조회
 export const getAttendanceSheet = async (date: string) => {
     try {
         const targetDate = new Date(`${date}T00:00:00.000Z`)
         const cells = await prisma.cell.findMany({
             include: {
+                teachers: true,
                 children: {
                     include: {
                         attendances: {
@@ -150,12 +151,13 @@ export const getAttendanceSheet = async (date: string) => {
         return cells.map((cell) => ({
             id: cell.id,
             name: cell.name,
+            teachers: cell.teachers.map((teacher) => teacher.name),
             children: cell.children.map((child) => ({
                 id: child.id,
                 name: child.name,
                 grade: child.grade,
                 zone: child.zone,
-                present: child.attendances[0]?.present ?? false,
+                status: (child.attendances[0]?.status ?? "ABSENT") as ChildAttendanceStatus,
             })),
         }))
     } catch (e) {
@@ -163,10 +165,11 @@ export const getAttendanceSheet = async (date: string) => {
     }
 };
 
-// 주일 예배 출석부 - 출석 여부 저장
-export const setAttendance = async ({ child_id, date, present }: SetAttendance) => {
+// 주일 예배 출석부 - 출석 상태(출석/지각/결석) 저장
+export const setAttendance = async ({ child_id, date, status }: SetAttendance) => {
     try {
         const targetDate = new Date(`${date}T00:00:00.000Z`)
+        const present = status !== "ABSENT"
         const attendance = await prisma.attendance.upsert({
             where: {
                 childId_date: {
@@ -174,12 +177,80 @@ export const setAttendance = async ({ child_id, date, present }: SetAttendance) 
                     date: targetDate,
                 },
             },
-            update: { present },
-            create: { childId: child_id, date: targetDate, present },
+            update: { present, status },
+            create: { childId: child_id, date: targetDate, present, status },
         })
 
         return { status: 200, attendance }
     } catch (e) {
         return { status: 500 }
+    }
+};
+
+// 주일 예배 출석부 - 특정 날짜의 선생님 출석 상태 조회
+export const getTeacherAttendanceSheet = async (date: string) => {
+    try {
+        const targetDate = new Date(`${date}T00:00:00.000Z`)
+        const teachers = await prisma.teacher.findMany({
+            include: {
+                attendances: {
+                    where: { date: targetDate },
+                },
+            },
+            orderBy: { name: "asc" },
+        })
+
+        return teachers.map((teacher) => ({
+            id: teacher.id,
+            name: teacher.name,
+            status: (teacher.attendances[0]?.status ?? "ABSENT") as TeacherAttendanceStatus,
+        }))
+    } catch (e) {
+        return []
+    }
+};
+
+// 주일 예배 출석부 - 선생님 출석 상태(출석/결석/기도참석) 저장
+export const setTeacherAttendance = async ({ teacher_id, date, status }: SetTeacherAttendance) => {
+    try {
+        const targetDate = new Date(`${date}T00:00:00.000Z`)
+        const attendance = await prisma.teacherAttendance.upsert({
+            where: {
+                teacherId_date: {
+                    teacherId: teacher_id,
+                    date: targetDate,
+                },
+            },
+            update: { status },
+            create: { teacherId: teacher_id, date: targetDate, status },
+        })
+
+        return { status: 200, attendance }
+    } catch (e) {
+        return { status: 500 }
+    }
+};
+
+// 주일 예배 출석부 - 학생의 한 달 출석 기록 조회 (date가 속한 달 기준)
+export const getChildMonthlyAttendance = async (child_id: number, date: string): Promise<MonthlyAttendanceEntry[]> => {
+    try {
+        const base = new Date(`${date}T00:00:00.000Z`)
+        const monthStart = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), 1))
+        const nextMonthStart = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth() + 1, 1))
+
+        const attendances = await prisma.attendance.findMany({
+            where: {
+                childId: child_id,
+                date: { gte: monthStart, lt: nextMonthStart },
+            },
+            orderBy: { date: "asc" },
+        })
+
+        return attendances.map((attendance) => ({
+            date: attendance.date.toISOString().slice(0, 10),
+            status: attendance.status as ChildAttendanceStatus,
+        }))
+    } catch (e) {
+        return []
     }
 };

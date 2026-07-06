@@ -68,22 +68,43 @@ export interface IEditStudentInfo {
 }
 
 // 출석부 관련
+export type ChildAttendanceStatus = 'PRESENT' | 'LATE' | 'ABSENT'
+export type TeacherAttendanceStatus = 'PRESENT' | 'ABSENT' | 'PRAYER'
+
 export interface AttendanceChild {
     id: number
     name: string
     grade: number
     zone: string
-    present: boolean
+    status: ChildAttendanceStatus
 }
 
 export interface AttendanceCell {
     id: number
     name: string
+    teachers: string[]
     children: AttendanceChild[]
 }
 
 export interface SetAttendance {
     child_id: number
     date: string
-    present: boolean
+    status: ChildAttendanceStatus
+}
+
+export interface AttendanceTeacher {
+    id: number
+    name: string
+    status: TeacherAttendanceStatus
+}
+
+export interface SetTeacherAttendance {
+    teacher_id: number
+    date: string
+    status: TeacherAttendanceStatus
+}
+
+export interface MonthlyAttendanceEntry {
+    date: string
+    status: ChildAttendanceStatus
 }

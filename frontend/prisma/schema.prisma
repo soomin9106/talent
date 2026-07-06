@@ -19,10 +19,22 @@ model Cell {
 }
 
 model Teacher {
-  id        Int     @id @default(autoincrement())
-  name      String
-  cellId    Int?
-  cell      Cell?   @relation("CellTeachers", fields: [cellId], references: [id])
+  id          Int                 @id @default(autoincrement())
+  name        String
+  cellId      Int?
+  cell        Cell?               @relation("CellTeachers", fields: [cellId], references: [id])
+  attendances TeacherAttendance[]
+}
+
+// status: PRESENT(출석) | ABSENT(결석) | PRAYER(기도참석)
+model TeacherAttendance {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  status    String   @default("ABSENT")
+  teacherId Int
+  teacher   Teacher  @relation(fields: [teacherId], references: [id])
+
+  @@unique([teacherId, date])
 }
 
 model Child {
@@ -36,10 +48,12 @@ model Child {
   attendances Attendance[]
 }
 
+// status: PRESENT(출석) | LATE(지각) | ABSENT(결석)
 model Attendance {
   id      Int      @id @default(autoincrement())
   date    DateTime
   present Boolean  @default(true)
+  status  String   @default("ABSENT")
   childId Int
   child   Child    @relation(fields: [childId], references: [id])
 
